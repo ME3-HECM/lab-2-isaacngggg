@@ -18,4 +18,5 @@ void main(void)
 		LEDarray_disp_bin(count); //output a on the LED array in binary
 		__delay_ms(50); // Delay so human eye can see change
     }
+    // initialised project
 }
