@@ -17,23 +17,37 @@ void LEDarray_init(void)
     TRISFbits.TRISF0 = 0;
     TRISBbits.TRISB0 = 0;
     TRISBbits.TRISB1 = 0;
-    TRISCbits.TRISC6 = 0;
     
 	//set initial output LAT values (they may have random values when powered on)
     
-    LATGbits.LATG0 = 1;
-    LATGbits.LATG1 = 1;
-    LATAbits.LATA2 = 1;
-    LATFbits.LATF6 = 1;
-    LATAbits.LATA4 = 1;
-    LATAbits.LATA5 = 1;
-    LATFbits.LATF0 = 1;
-    LATBbits.LATB0 = 1;
-    LATBbits.LATB1 = 1;
-    LATCbits.LATC6 = 1;
+    LATGbits.LATG0 = 0;
+    LATGbits.LATG1 = 0;
+    LATAbits.LATA2 = 0;
+    LATFbits.LATF6 = 0;
+    LATAbits.LATA4 = 0;
+    LATAbits.LATA5 = 0;
+    LATFbits.LATF0 = 0;
+    LATBbits.LATB0 = 0;
+    LATBbits.LATB1 = 0;
     
 }
 
+void RF2button_init(void){
+    TRISFbits.TRISF2=1; //set TRIS value for pin (input)
+    ANSELFbits.ANSELF2=0; //turn off analogue input on pin  
+}
+/*
+
+void LDRbutton_init(void){
+    TRISAbits.TRISA3 = 1;
+    ANSELAbits.ANSELA3 = 1;
+    ADREFbits.ADNREF = 0;  // Use Vss (0V) as negative reference
+    ADREFbits.ADPREF = 0b00; // Use Vdd (3.3V) as positive reference
+    ADCON0bits.ADFM = 0; // Left-justified result (i.e. no leading 0s)
+    ADCON0bits.ADCS = 1; // Use internal Fast RC (FRC) oscillator as clock source for conversion
+    ADCON0bits.ADON = 1; // Enable ADC
+}
+ * */
 /************************************
 / LEDarray_disp_bin
 / Function used to display a number on the LED array in binary
@@ -41,6 +55,7 @@ void LEDarray_init(void)
 void LEDarray_disp_bin(unsigned int number)
 {
 	//some code to turn on/off the pins connected to the LED array
+    
     LATGbits.LATG0 = 0;
     LATGbits.LATG1 = 0;
     LATAbits.LATA2 = 0;
@@ -52,36 +67,34 @@ void LEDarray_disp_bin(unsigned int number)
     LATBbits.LATB1 = 0;
     LATCbits.LATC6 = 0;
     
+    
 	//if statements and bit masks can be used to determine if a particular pin should be on/off
-    if (number & 0b0000000001) {
+    if (number & 0b000000001) {
         LATGbits.LATG0 = 1;
     }
-    if (number & 0b0000000010) {
+    if (number & 0b000000010) {
         LATGbits.LATG1 = 1;
     }
-    if (number & 0b0000000100) {
+    if (number & 0b000000100) {
         LATAbits.LATA2 = 1;
     }
-    if (number & 0b0000001000) {
+    if (number & 0b000001000) {
         LATFbits.LATF6 = 1;
     }
-    if (number & 0b0000010000) {
+    if (number & 0b000010000) {
         LATAbits.LATA4 = 1;
     }
-    if (number & 0b0000100000) {
+    if (number & 0b000100000) {
         LATAbits.LATA5 = 1;
     }
-    if (number & 0b0001000000) {
+    if (number & 0b001000000) {
         LATFbits.LATF0 = 1;
     }
-    if (number & 0b0010000000) {
+    if (number & 0b010000000) {
         LATBbits.LATB0 = 1;
     }
-    if (number & 0b0100000000) {
+    if (number & 0b100000000) {
         LATBbits.LATB1 = 1;
-    }
-    if (number & 0b1000000000) {
-        LATCbits.LATC6 = 1;
     }
 	//see Readme.md for examples
 }

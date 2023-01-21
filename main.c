@@ -13,21 +13,30 @@ void main(void)
 {
 	unsigned int count=0;
     LEDarray_init();
-    int number = 0;
+    //LDRbutton_init();
+    RF2button_init();
     
-    while(1){
-        while (count < 10){
-            count++; // increment count
-            number = pow(2,count);
-            LEDarray_disp_bin(number); //output a on the LED array in binary
-            __delay_ms(50); // Delay so human eye can see change
+    
+    while(count < 511){
+        //while (PORTAbits.RA3 == 0){
+        while (PORTFbits.RF2);                 // whilst no button is pressed keep waiting
+        if(!PORTFbits.RF2) {                     // if button is pressed 
+            count ++;                           // count up
+            LEDarray_disp_bin(count);           // light up the amount counted
+            __delay_ms(100); 
+            while (!PORTFbits.RF2){
+                __delay_ms(300); 
+                if(!PORTFbits.RF2) {
+                    count ++;
+                    LEDarray_disp_bin(count);
+                }
+                else{break;}
+            }
         }
-        while (count != 0) {
-            count--; // increment count
-            number = pow(2,count);
-            LEDarray_disp_bin(number); //output a on the LED array in binary
-            __delay_ms(50); // Delay so human eye can see change
-        }
+        
+        //}
+        //if(count > 127) {count=0;}
+        //LEDarray_disp_bin(count); //output a on the LED array in binary
     }
 }
 
