@@ -53,28 +53,36 @@ void LEDarray_disp_bin(unsigned int number)
     LATCbits.LATC6 = 0;
     
 	//if statements and bit masks can be used to determine if a particular pin should be on/off
-    if (number & 0b00000001) {
+    if (number & 0b0000000001) {
         LATGbits.LATG0 = 1;
     }
-    if (number & 0b00000010) {
+    if (number & 0b0000000010) {
         LATGbits.LATG1 = 1;
     }
-    if (number & 0b00000100) {
+    if (number & 0b0000000100) {
         LATAbits.LATA2 = 1;
     }
-    if (number & 0b00001000) {
+    if (number & 0b0000001000) {
         LATFbits.LATF6 = 1;
     }
-    if (number & 0b00010000) {
+    if (number & 0b0000010000) {
         LATAbits.LATA4 = 1;
     }
-    if (number & 0b00100000) {
+    if (number & 0b0000100000) {
         LATAbits.LATA5 = 1;
     }
-    if (number & 0b01000000) {
+    if (number & 0b0001000000) {
         LATFbits.LATF0 = 1;
     }
-    
+    if (number & 0b0010000000) {
+        LATBbits.LATB0 = 1;
+    }
+    if (number & 0b0100000000) {
+        LATBbits.LATB1 = 1;
+    }
+    if (number & 0b1000000000) {
+        LATCbits.LATC6 = 1;
+    }
 	//see Readme.md for examples
 }
 

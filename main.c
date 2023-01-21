@@ -16,7 +16,7 @@ void main(void)
   
     while (1) {
 		count++; // increment count
-		if (count>511) {count=0;} //reset a when it gets too big
+		if (count>2047) {count=0;} //reset a when it gets too big
 		LEDarray_disp_bin(count); //output a on the LED array in binary
 		__delay_ms(50); // Delay so human eye can see change
     }
