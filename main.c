@@ -22,16 +22,18 @@ void main(void)
         while (PORTFbits.RF2);                 // whilst no button is pressed keep waiting
         if(!PORTFbits.RF2) {                     // if button is pressed 
             count ++;                           // count up
-            LEDarray_disp_bin(count);           // light up the amount counted
+            LEDarray_disp_dec(count);           // light up the amount counted
             __delay_ms(100); 
             while (!PORTFbits.RF2){
                 __delay_ms(300); 
                 if(!PORTFbits.RF2) {
                     count ++;
-                    LEDarray_disp_bin(count);
+                    LEDarray_disp_dec(count);
                 }
                 else{break;}
             }
+           
+            
         }
         
         //}

@@ -65,7 +65,6 @@ void LEDarray_disp_bin(unsigned int number)
     LATFbits.LATF0 = 0;
     LATBbits.LATB0 = 0;
     LATBbits.LATB1 = 0;
-    LATCbits.LATC6 = 0;
     
     
 	//if statements and bit masks can be used to determine if a particular pin should be on/off
@@ -96,6 +95,7 @@ void LEDarray_disp_bin(unsigned int number)
     if (number & 0b100000000) {
         LATBbits.LATB1 = 1;
     }
+    
 	//see Readme.md for examples
 }
 
@@ -104,14 +104,27 @@ void LEDarray_disp_bin(unsigned int number)
 / Used to display a number on the LEDs
 / where each LED is a value of 10
 ************************************/
-void LEDarray_disp_dec(unsigned int number)
+void LEDarray_disp_dec(int number)
 {
 	unsigned int disp_val;
-	
+	number = number - 10;
+    if (number < 0){
+        disp_val = 0;
+    }
+    if (number > 0){
+        disp_val = 1;
+        number = number - 10;
+        while (number > 0){
+        disp_val = disp_val << 1;
+        number = number - 10;
+        }
+    }
 	//some code to manipulate the variable number into the correct
+    
 	//format and store in disp_val for display on the LED array
 
 	LEDarray_disp_bin(disp_val); 	//display value on LED array
+    __delay_ms(100);
 }
 
 
