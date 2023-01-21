@@ -36,18 +36,7 @@ void RF2button_init(void){
     TRISFbits.TRISF2=1; //set TRIS value for pin (input)
     ANSELFbits.ANSELF2=0; //turn off analogue input on pin  
 }
-/*
 
-void LDRbutton_init(void){
-    TRISAbits.TRISA3 = 1;
-    ANSELAbits.ANSELA3 = 1;
-    ADREFbits.ADNREF = 0;  // Use Vss (0V) as negative reference
-    ADREFbits.ADPREF = 0b00; // Use Vdd (3.3V) as positive reference
-    ADCON0bits.ADFM = 0; // Left-justified result (i.e. no leading 0s)
-    ADCON0bits.ADCS = 1; // Use internal Fast RC (FRC) oscillator as clock source for conversion
-    ADCON0bits.ADON = 1; // Enable ADC
-}
- * */
 /************************************
 / LEDarray_disp_bin
 / Function used to display a number on the LED array in binary
@@ -117,16 +106,44 @@ void LEDarray_disp_dec(int number)
         while (number > 0){
         disp_val = disp_val << 1;
         number = number - 10;
+        LEDarray_disp_bin(disp_val);
         }
     }
 	//some code to manipulate the variable number into the correct
     
 	//format and store in disp_val for display on the LED array
 
-	LEDarray_disp_bin(disp_val); 	//display value on LED array
-    __delay_ms(100);
+	 	//display value on LED array
+    LEDarray_disp_bin(disp_val);
 }
 
+void LEDarray_disp_linear(int number, int max)
+{
+    int increments = max/9;
+    unsigned int disp_val;
+	number = number - increments;
+    if (number < 0){
+        disp_val = 0;
+        
+    }
+    if (number > 0){
+        disp_val = 1;
+        number = number - increments;
+        while (number > 0){
+        disp_val = disp_val << 1;
+        disp_val += 1;
+        number = number - increments;
+        
+        }
+    }
+    LEDarray_disp_bin(disp_val);
+	//some code to manipulate the variable number into the correct
+    
+	//format and store in disp_val for display on the LED array
+
+	 	//display value on LED array
+    
+}
 
 /************************************
 / LEDarray_disp_PPM
