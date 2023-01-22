@@ -12,7 +12,8 @@ void RF2button_init(void);
 void LEDarray_disp_bin(unsigned int number);
 void LEDarray_disp_dec(int number);
 void LEDarray_disp_linear(int number,int max);
-void LEDarray_disp_PPM(unsigned int number, unsigned int max);
+void LEDarray_disp_bin_n(int number, int max);
+void LEDarray_disp_PPM(int cur_max, int max, int cal_max);
 
 
 #endif

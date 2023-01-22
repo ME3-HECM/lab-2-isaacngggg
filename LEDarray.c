@@ -88,6 +88,32 @@ void LEDarray_disp_bin(unsigned int number)
 	//see Readme.md for examples
 }
 
+void LEDarray_disp_bin_n(int number, int max)
+{
+	//some code to turn on/off the pins connected to the LED array
+  
+    
+	//if statements and bit masks can be used to determine if a particular pin should be on/off
+    int increments = max/9;
+    unsigned int disp_val;
+	number = number - increments;
+    if (number < 0){
+        disp_val = 0;
+        
+    }
+    if (number > 0){
+        disp_val = 1;
+        number = number - increments;
+        while (number > 0){
+        disp_val = disp_val << 1;
+        number = number - increments;
+        
+        }
+    }
+    LEDarray_disp_bin(disp_val);
+    
+	//see Readme.md for examples
+}
 /************************************
 / Function LEDarray_disp_dec
 / Used to display a number on the LEDs
@@ -151,13 +177,43 @@ void LEDarray_disp_linear(int number, int max)
 / cur_val is the current level from the most recent sample, and max is the peak value for the last second
 / these input values need to calculated else where in your code
 ************************************/
-void LEDarray_disp_PPM(unsigned int cur_val, unsigned int max)
-{
-	unsigned int disp_val;
-	
+void LEDarray_disp_PPM(int cur_max, int max, int cal_max)
+{	
 	// some code to format the variable cur_val and max, store in disp_val for display on the LED array
+    int cur_val ;
+    int max_val ;
+    
+	cur_max = cur_max - cal_max/9;
+   
+    if (cur_max > 0){
+        cur_val = 1;
+        cur_max = cur_max - cal_max/9;
+        while (cur_max > 0){
+            cur_val = cur_val << 1;
+            cur_val += 1;
+            cur_max = cur_max - cal_max/9;
+        }
+    }
+    else {
+        cur_val=0;
+    }
+    
+    max = max - cal_max/9;
+    
+    if (max > 0){
+            max_val = 1;
+            max = max - cal_max/9;
+            while (max > 0){
+            max_val = max_val << 1;
+            max = max - cal_max/9;
+        }
+    }
+    else {
+        max_val=0;
+    }
+    
 	// hint: one method is to manipulate the variables separately and then combine them using the bitwise OR operator
 
-	LEDarray_disp_bin(disp_val);	//display value on LED array
+	LEDarray_disp_bin(max_val|cur_val);	//display value on LED array
 }
 

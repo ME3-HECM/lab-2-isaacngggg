@@ -12,15 +12,25 @@
 
 void main(void) 
 {
-	unsigned int count=0;
     LEDarray_init();
     ADC_init();
-    int max_value = ADC_getval();
-    
+    int cal_max = ADC_getval();
+    int cur_max = 0;
+    int temp_max = 0;
+    unsigned int count = 0;
     
     while(1){
-        LEDarray_disp_linear(ADC_getval(),max_value);
-        __delay_ms(50); 
+        cur_max = ADC_getval();
+        count ++;
+        if (count > 20){
+            count = 0;
+            temp_max = temp_max - cal_max/9;
+        }
+        if (cur_max > temp_max){
+            temp_max = cur_max;
+        }
+        LEDarray_disp_PPM(cur_max,temp_max,cal_max);
+        __delay_ms(50);
     }
 }
 
